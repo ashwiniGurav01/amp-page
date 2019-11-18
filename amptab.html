@@ -1,0 +1,385 @@
+<!--
+  ## Introduction
+
+  This is an implementation of tab panels that uses [`amp-selector`](/content/amp-dev/documentation/components/reference/amp-selector-v0.1.md). Tabs and tab panels are positioned via `flexbox` and `amp-selector` uses the `selected` attribute to show/hide the correct tab panel and style the selected tab.
+--><!-- -->
+<!doctype html>
+<html ⚡>
+<head>
+<meta charset="utf-8">
+  <title>Tab Panels with amp-selector</title>
+    <link rel="canonical" href="https://amp.dev/documentation/examples/style-layout/tab_panels_with_amp-selector/index.html">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
+    <!-- There's just a bit of CSS that's needed. -->
+    <style amp-custom>
+        :root {
+          --color-primary: #005AF0;
+          --space-1: .5rem;  /* 8px */
+          --space-4: 2rem;   /* 32px */
+        }
+
+        /* Styles for the flex layout based tabs */
+        amp-selector[role=tablist].tabs-with-flex {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        amp-selector[role=tablist].tabs-with-flex [role=tab] {
+            flex-grow: 1;
+            /* custom styling, feel free to change */
+            text-align: center;
+            padding: var(--space-1);
+        }
+        amp-selector[role=tablist].tabs-with-flex [role=tab][selected] {
+            outline: none;
+            /* custom styling, feel free to change */
+            border-bottom: 2px solid var(--color-primary);
+        }
+        amp-selector[role=tablist].tabs-with-flex [role=tabpanel] {
+            display: none;
+            width: 100%;
+            order: 1; /* must be greater than the order of the tab buttons to flex to the next line */
+            /* custom styling, feel free to change */
+            padding: var(--space-4);
+        }
+        amp-selector[role=tablist].tabs-with-flex [role=tab][selected] + [role=tabpanel] {
+            display: block;
+        }
+
+        /* Styles for the selector based tabs */
+        amp-selector[role=tablist].tabs-with-selector {
+            display: flex;
+        }
+        amp-selector[role=tablist].tabs-with-selector [role=tab][selected] {
+            outline: none;
+            /* custom styling, feel free to change */
+            border-bottom: 2px solid var(--color-primary);
+        }
+        amp-selector[role=tablist].tabs-with-selector {
+            display: flex;
+        }
+        amp-selector[role=tablist].tabs-with-selector [role=tab] {
+          /* custom styling, feel free to change */
+          width: 100%;
+          text-align: center;
+          padding: var(--space-1);
+        }
+        amp-selector.tabpanels [role=tabpanel] {
+          display: none;
+          /* custom styling, feel free to change */
+          padding: var(--space-4);
+        }
+        amp-selector.tabpanels [role=tabpanel][selected] {
+          outline: none;
+          display: block;
+        }
+
+    </style>
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+</head>
+<body>
+    <!--
+      ## Simple tabs using a flex layout
+
+      This is the most basic example with three panels. Each `tabpanel` is defined below it's `tab` and is hidden by default. Only if a `tab` is selected, the `tabpanel` is set to visible via the following CSS rule:
+
+      ```css
+      amp-selector[role=tablist] [role=tab][selected] + [role=tabpanel] {
+        display: block;
+      }
+      ```
+
+      The tab content is positioned below the tab button using a flex layout.
+    -->
+    <amp-selector class="tabs-with-flex" role="tablist">
+      <div id="tab1" role="tab" aria-controls="tabpanel1" option selected>Motor Claim Process</div>
+      <div id="tabpanel1" role="tabpanel" aria-labelledby="tab1">
+        <div class="tab-accord-item-details">
+                          <div class="tabs-claim-wrap">
+                             <h4>  </h4>
+                             <div class="claim-process-list">
+                                <ul>
+                                   <li>
+                                      <span>1</span>
+                                      <p>Register your claim.</p>
+                                   </li>
+                                
+                                   <li>
+                                      <span>2</span>
+                                      <p>Send in your vehicle for repair.</p>
+                                   </li>
+                                
+                                   <li>
+                                      <span>3</span>
+                                      <p>Survey and claim settlement.</p>
+                                   </li>
+                                </ul>
+                             </div>
+                          </div>
+                          <div class="tabs-claim-wrap">
+                             <h5>Register a Motor Insurance Claim</h5>
+                             
+                             <div class="claims-normal-cont">
+                                 <p>Have you damaged your car? No need to fret, we are with you!</p>
+<p> If you are moving ahead with your Car Insurance claim, we have made the process absolutely hassle-free. In case you opt for online claims, click <a href="https://general.bajajallianz.com/BagicNxt/MotClaims/index.jsp" target="_blank">click here</a>. Otherwise, calling our Toll Free Number 1800-209-5858 will always help you reach us in an instant. We’re happy to help you, no matter what time of the day it is!</p> 
+                             </div>
+                          
+                             <h5>What You Will Need to Provide</h5>
+                             
+                             <div class="claims-normal-cont">
+                                 <p>When we say hassle-free, trust us to mean every syllable of it. We realize that your time is precious, particularly during an emergency. What you would have to provide is therefore minimal.</p>
+
+<ul class="claims-normal-bull">
+     <li>Contact number </li>
+<li>Engine and chassis number </li>
+<li>Date and time of accident </li>
+<li>Description and location of accident  </li>
+<li>Vehicle inspection address </li>
+<li>Kilometre reading  </li>
+</ul>
+<p>Once you have registered your Motor Insurance claim, you will be receiving a Claim Reference number from our customer support executive. You will be intimated over SMS about the exact status of your claim. You can also call us at our Toll Free Number and provide the Claim Reference Number to know your general insurance claim status.</p>
+<p>PS – We are also available at our Toll Free Number 1800-103-5858 for any roadside assistance, 24x7.  This service is for our customers who have opted for this feature within their Car Insurance policy. </p>
+ 
+                             </div>
+                          
+                             <h5>Send in Your Vehicle for Repair</h5>
+                             
+                             <div class="claims-normal-cont">
+                                 <p>We would suggest you move your vehicle to the garage from the accident spot (in case of an accident) or have it towed to avoid any further damage. </p>
+<p>In case of theft, file a complaint in writing with the police and intimate us on our Toll Free Number. Should your vehicle not be found within 90 days, ask the police to issue a Non-Traceable Report (an undertaking that they are yet to find your vehicle) and hand over the report to us.</p> 
+<p>You can then sit back and let us take care of the rest.</p>
+ 
+                             </div>
+                          
+                             <h5>Send in Your Vehicle for Repair</h5>
+                             
+                             <div class="claims-normal-cont">
+                                 <p>We would suggest you move your vehicle to the garage from the accident spot (in case of an accident) or have it towed to avoid any further damage.</p>
+<p>In case of theft, file a complaint in writing with the police and intimate us on our Toll Free Number. Should your vehicle not be found within 90 days, ask the police to issue a Non-Traceable Report (an undertaking that they are yet to find your vehicle) and hand over the report to us. </p>
+<p>You can then sit back and let us take care of the rest.</p> 
+                             </div>
+                          
+                             <h5>Survey and Claim Settlement</h5>
+                             
+                             <div class="claims-normal-cont">
+                                 <p>Basis the nature of your General Insurance claim, submit the copy of documents to your preferred garage/dealer and have them tallied with the originals. </p>
+<p>Is the damage not too severe? Only got a cracked windshield or a bumper that has come off loose? In that case, we suggest you let our Motor OTS (On-The-Spot) service take over. </p>
+<p>From buying insurance, getting policy renewal alerts to intimating general insurance claims, Bajaj Allianz Insurance Wallet, our mobile app, is the one-stop easy app for all your insurance related needs.</p>
+<p>We will repair your vehicle (within X working days) at a network garage of your preference, deliver it to your doorstep and pay the garage directly. You will only have to pay the excesses (as mentioned in the policy) and the depreciation value as informed by the surveyor.</p>
+<p>With Bajaj Allianz Motor Insurance, you can not only secure your vehicle but also avail a host of other add-ons such as Roadside Assistance among others.</p> 
+                             </div>
+                          
+                             <h5>Claim Forms</h5>
+                             
+                             <div class="claims-normal-cont">
+                                 <p>Please fill the required claim form below, based on the nature of your claim.</p>
+<ul class="claimLists"><li style="float: left;margin-right: 40.0px;"><a href="https://www.bajajallianz.com/download-documents/motor/Motor_Claim_Form.pdf" target="_blank" style="text-decoration: underline;">Motor Claim</a></li>
+<li style="float: left;margin-right: 40.0px;"><a href="https://www.bajajallianz.com/download-documents/motor/Mandate_form_Direct_Loss_Payment.pdf" style="text-decoration: underline;" target="_blank">Mandate Form Direct Loss Payment</a></li></ul> 
+                             </div>
+                          </div>
+                       </div>
+      </div>
+      <div id="tab2" role="tab" aria-controls="tabpanel2" option>Check List</div>
+      <div id="tabpanel2" role="tabpanel" aria-labelledby="tab2">
+         <div class="claimcontent "  >
+                                   
+                                   <div class="description" >
+                                   <h4>Claim for accidental damages</h4>
+                                         <ul class="claimLists">
+                                            <li>
+                                               Claim form duly filled and signed by the insured
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Proof of insurance Policy / Covernote copy
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Copy of Registration Book, Tax Receipt
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Copy of Motor Driving Licence of the person driving the vehicle at the time
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Police Panchanama/FIR ( In case of Third Party property damage /Death / Body injury)
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Estimate for repairs from the repairer where the vehicle is to be repaired
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Repair Bills and payment receipts after the job is completed
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Claims Discharge Cum Satisfaction Voucher signed across a Revenue Stamp
+                                               
+                                            </li>
+                                         </ul>
+                                         
+                                         <h4>Claim for theft cases</h4>
+                                         <ul class="claimLists">
+                                            <li>
+                                               Claim form duly filled and signed by the insured
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Original Policy document
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Original Registration Book/Certificate and Tax Payment Receipt
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Previous insurance details - Policy No, insuring Office/Company, period of insurance
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               All the sets of keys/Service Booklet/Warranty Card
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Police Panchanama/ FIR and Final Investigation Report
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Acknowledged copy of letter addressed to RTO intimating theft and making vehicle "NON-USE"
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Form 28, 29 and 30 signed by the insured
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Letter of Subrogation
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Consent towards agreed caim settlement value from you and Financer
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               NOC of the Financer if claim is to be settled in your favor
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Blank and undated "Vakalatnama"
+                                               
+                                            </li>
+                                         
+                                            <li>
+                                               Claim Discharge Voucher signed across a Revenue Stamp
+                                               
+                                            </li>
+                                         </ul>
+                                   </div>
+                                </div>
+                             
+                                
+      </div>
+      <div id="tab3" role="tab" aria-controls="tabpanel3" option>Product List</div>
+      <div id="tabpanel3" role="tabpanel" aria-labelledby="tab3">
+       
+     
+                             
+                             
+                              
+                         <div class="otherInsWrap">
+                             <ul class="productListtop wowAnimate animated">
+                                <li>
+                                   <div class="otherInsIconWrap">
+                                      <div class="iconSec animIconSec">
+                                         <div class="imgBox"> <amp-img src="images/insurance-wheel-four-wheel.png" alt="Car Insurance" title="Car Insurance" width="250"
+                        height="250" on="tap:AMP.setState({claimAss: !claimAss})" role="" tabindex=""></amp-img>
+                       </div>
+                                      </div>
+                                   </div>
+                                  <a href="/motor-insurance/car-insurance-online" class="otherInsHeads" target="_blank">Car Insurance</a>
+                                   <p class="otherInsTxt"></p>
+                                </li>
+                             
+                                <li>
+                                   <div class="otherInsIconWrap">
+                                      <div class="iconSec animIconSec">
+                                         <div class="imgBox"> 
+                                         <amp-img src="images/insurance-wheel-two-wheel.png" alt="Two-Wheeler Insurance" title="Two Wheeler Insurance" width="250"
+                        height="250" on="tap:AMP.setState({claimAss: !claimAss})" role="" tabindex=""></amp-img>
+                        
+                                      </div>
+                                   </div></div>
+                                  <a href="/motor-insurance/two-wheeler-insurance-online" class="otherInsHeads" target="_blank">Two-Wheeler Insurance</a>
+                                   <p class="otherInsTxt"></p>
+                                </li>
+                             
+                                <li>
+                                   <div class="otherInsIconWrap">
+                                      <div class="iconSec animIconSec">
+                                         <div class="imgBox">
+                                          <amp-img src="images/insurance-wheel-third-party.png" alt="Third-Party / Liability Only - Motor Insurance" width="250"
+                        height="250" on="tap:AMP.setState({claimAss: !claimAss})" role="" tabindex=""></amp-img>
+                         </div>
+                                      </div>
+                                   </div>
+                                  <a href="/motor-insurance/third-party-car-insurance-online" class="otherInsHeads" target="_blank">Third-Party / Liability Only - Motor Insurance</a>
+                                   <p class="otherInsTxt"></p>
+                                </li>
+                             
+                                <li>
+                                   <div class="otherInsIconWrap">
+                                      <div class="iconSec animIconSec">
+                                         <div class="imgBox"> 
+                                         <amp-img src="images/commercial-vehicle.png" alt="Commercial Vehicle Insurance" width="250"
+                        height="250" on="tap:AMP.setState({claimAss: !claimAss})" role="" tabindex=""></amp-img>
+                         </div>
+                                      </div>
+                                   </div>
+                                  <a href="/motor-insurance/commercial-vehicle-insurance" class="otherInsHeads" target="_blank">Commercial Vehicle Insurance</a>
+                                   <p class="otherInsTxt"></p>
+                                </li>
+                             </ul>
+                             <a class="otherProductLink showMore" style="display: none;"></a>
+                             <div class="otherSolutions" style="display: none;">
+                                <h2 class="wowAnimate animated"></h2>
+                                <ul class="wowAnimate animated">
+                                   <li>
+                                      <div class="otherInsIconWrap">
+                                         <div class="iconSec animIconSec">
+                                            <div class="imgBox svgSec svgBox svgIconAddon"></div>
+                                         </div>
+                                      </div>
+                                      <p class="otherInsHeads"></p>
+                                      <p class="otherInsTxt"></p>
+                                      <a class="learnMore" target="_blank" title="Learn more"></a> 
+                                   </li>
+                                </ul>
+                                <a class="otherProductLink showLess" title="Other Products"></a> 
+                             </div>
+                          </div>
+      </div>
+    </amp-selector>
+
+    
+</body></html>
